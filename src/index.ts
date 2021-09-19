@@ -4,11 +4,11 @@ import wait from '@/wait';
 import localVersionIsOk from '@/localVersionIsOk';
 import getRemoteVersion from '@/getRemoteVersion';
 
-export default (thisVersion: string, jsonUrl: string, packageName: string): Promise<void> => {
+export default (thisVersion: string, jsonUrlOrNPMPackageName: string, packageDisplayName: string): Promise<void> => {
   return new Promise<void>(async (resolve, reject) => {
     let remoteVersion;
     try {
-      remoteVersion = await getRemoteVersion(thisVersion, jsonUrl);
+      remoteVersion = await getRemoteVersion(jsonUrlOrNPMPackageName);
     } catch (e) {
       console.log('Could not check the remote version: ' + e.message);
       console.log(' ');
@@ -20,7 +20,7 @@ export default (thisVersion: string, jsonUrl: string, packageName: string): Prom
       return resolve();
     }
 
-    const error = `WARNING: The version of ${packageName} you are running, ` + thisVersion.bold + ', is' + ' OUTDATED!'.bold;
+    const error = `WARNING: The version of ${packageDisplayName} you are running, ` + thisVersion.bold + ', is' + ' OUTDATED!'.bold;
     console.log(error.red);
     console.log('THERE IS A BETTER VERSION: '.red + remoteVersion.green.bold);
 

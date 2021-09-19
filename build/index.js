@@ -6,11 +6,11 @@ const inquirer_1 = (0, tslib_1.__importDefault)(require("inquirer"));
 const wait_1 = (0, tslib_1.__importDefault)(require("./wait"));
 const localVersionIsOk_1 = (0, tslib_1.__importDefault)(require("./localVersionIsOk"));
 const getRemoteVersion_1 = (0, tslib_1.__importDefault)(require("./getRemoteVersion"));
-exports.default = (thisVersion, jsonUrl, packageName) => {
+exports.default = (thisVersion, jsonUrlOrNPMPackageName, packageDisplayName) => {
     return new Promise(async (resolve, reject) => {
         let remoteVersion;
         try {
-            remoteVersion = await (0, getRemoteVersion_1.default)(thisVersion, jsonUrl);
+            remoteVersion = await (0, getRemoteVersion_1.default)(jsonUrlOrNPMPackageName);
         }
         catch (e) {
             console.log('Could not check the remote version: ' + e.message);
@@ -22,7 +22,7 @@ exports.default = (thisVersion, jsonUrl, packageName) => {
             console.log(smiley + 'This local version looks fresh and shiny, nice!'.green);
             return resolve();
         }
-        const error = `WARNING: The version of ${packageName} you are running, ` + thisVersion.bold + ', is' + ' OUTDATED!'.bold;
+        const error = `WARNING: The version of ${packageDisplayName} you are running, ` + thisVersion.bold + ', is' + ' OUTDATED!'.bold;
         console.log(error.red);
         console.log('THERE IS A BETTER VERSION: '.red + remoteVersion.green.bold);
         if (process.env.npm_tool_version_check__quiet) {
