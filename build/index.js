@@ -2,22 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 require("colors");
-const inquirer_1 = tslib_1.__importDefault(require("inquirer"));
-const wait_1 = tslib_1.__importDefault(require("./wait"));
-const localVersionIsOk_1 = tslib_1.__importDefault(require("./localVersionIsOk"));
-const getRemoteVersion_1 = tslib_1.__importDefault(require("./getRemoteVersion"));
+const inquirer_1 = (0, tslib_1.__importDefault)(require("inquirer"));
+const wait_1 = (0, tslib_1.__importDefault)(require("./wait"));
+const localVersionIsOk_1 = (0, tslib_1.__importDefault)(require("./localVersionIsOk"));
+const getRemoteVersion_1 = (0, tslib_1.__importDefault)(require("./getRemoteVersion"));
 exports.default = (thisVersion, jsonUrl, packageName) => {
     return new Promise(async (resolve, reject) => {
         let remoteVersion;
         try {
-            remoteVersion = await getRemoteVersion_1.default(thisVersion, jsonUrl);
+            remoteVersion = await (0, getRemoteVersion_1.default)(thisVersion, jsonUrl);
         }
         catch (e) {
             console.log('Could not check the remote version: ' + e.message);
             console.log(' ');
             return resolve();
         }
-        if (localVersionIsOk_1.default(thisVersion, remoteVersion)) {
+        if ((0, localVersionIsOk_1.default)(thisVersion, remoteVersion)) {
             const smiley = '    (ꙨပꙨ)   '.green.bold;
             console.log(smiley + 'This local version looks fresh and shiny, nice!'.green);
             return resolve();
@@ -39,9 +39,9 @@ exports.default = (thisVersion, jsonUrl, packageName) => {
         if (answers.installConfirm) {
             const smiley = '   :-| 😬😬   '.red.bold;
             console.log(smiley + 'Ok.. Continuing with the outdated version...'.red);
-            await wait_1.default(1000);
+            await (0, wait_1.default)(1000);
             console.log(smiley + 'Best of luck...'.red);
-            await wait_1.default(1000);
+            await (0, wait_1.default)(1000);
             resolve();
         }
         else {
