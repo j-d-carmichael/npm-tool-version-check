@@ -8,7 +8,7 @@ import https from 'https';
 export default (thisVersion: string, jsonUrl: string): Promise<string> => {
   console.log('Checking version with npm-tool-version-check from: ' + jsonUrl);
   return new Promise((resolve, reject) => {
-    https.get(jsonUrl, (res: IncomingMessage) => {
+    https.get(jsonUrl + '?' + new Date().getTime(), (res: IncomingMessage) => {
       let a = '';
       res.on('data', (d) => {
         a += d.toString();
